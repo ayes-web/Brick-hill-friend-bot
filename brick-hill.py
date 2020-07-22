@@ -4,8 +4,15 @@ from random import *
 
 # Browser used by the bot
 driver = webdriver.Firefox()
-waitTime = [10,15]
-firstAccount = 354022
+
+# how long it waits going to next user
+waitTime1 = [10,15]
+
+# how long it waits on 404 pages
+waitTime2 = 30
+
+# the id it starts counting up from
+startingID = 354022
 
 # You have to login or else it doesn't work
 driver.get("https://www.brick-hill.com/login")
@@ -13,8 +20,8 @@ t = input("Please press enter after you have logged in to the site! ")
 print(" ")
 
 #loops infinite
-while firstAccount != -666:
-	driver.get("https://www.brick-hill.com/user/" + str(firstAccount))
+while startingID != -666:
+	driver.get("https://www.brick-hill.com/user/" + str(startingID))
 
 	try:
 		# Finds the username
@@ -32,16 +39,17 @@ while firstAccount != -666:
 			# i have no idea why does trys are needed but it closes otherwise please help i am going insane
 			try:
 				while errorMessage.text == "Error 404: Page Not Found" or g == 0:
-					print("Waiting 30 seconds!")
-					time.sleep(30)
+					print("Waiting " + str(waitTime2) + " seconds!")
+					time.sleep(waitTime2)
 
-					driver.get("https://www.brick-hill.com/user/" + str(firstAccount))
+					driver.get("https://www.brick-hill.com/user/" + str(startingID))
 
 					try:
 						# checks for error message
 						errorMessage = driver.find_element_by_xpath("//div[@class='main-holder grid']/div[2]/span")
 					except:
 						print("New account found!")
+						#gets out of loop
 						g = 1
 			except:
 				print("FUck you it crashed ahahaah")
@@ -50,12 +58,10 @@ while firstAccount != -666:
 
 	try:
 		# prints username and id
-		print("Username: " + name.text + " ID: " + str(firstAccount))
-	except:
-		#tries to get the name again
-		driver.get("https://www.brick-hill.com/user/" + str(firstAccount))
+		driver.get("https://www.brick-hill.com/user/" + str(startingID))
 		name = driver.find_element_by_xpath("//div[@class='content text-center bold medium-text relative ellipsis']//span[@class='ellipsis']")
-		print("Username: " + name.text + " ID: " + str(firstAccount))
+		print("Username: " + name.text + " ID: " + str(startingID))
+	except:
 		# username fail message
 		print("I failed to send you the username and id :(")
 
@@ -68,10 +74,10 @@ while firstAccount != -666:
 		print("I already sent friend request to them.")
 		print("Going to the next one!")
 
-	firstAccount += 1
+	startingID += 1
 
 	#gives random wait time
-	chosenWait = uniform(waitTime[0], waitTime[1])
+	chosenWait = uniform(waitTime1[0], waitTime1[1])
 	print("Waiting " + str(chosenWait) + " Seconds")
 	#waits the given time
 	time.sleep(chosenWait)
