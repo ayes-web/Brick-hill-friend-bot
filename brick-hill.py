@@ -12,7 +12,7 @@ waitTime1 = [10,15]
 waitTime2 = 30
 
 # the id it starts counting up from
-startingID = 354022
+startingID = 354032
 
 # You have to login or else it doesn't work
 driver.get("https://www.brick-hill.com/login")
@@ -24,15 +24,8 @@ while startingID != -666:
 	driver.get("https://www.brick-hill.com/user/" + str(startingID))
 
 	try:
-		# Finds the username
-		name = driver.find_element_by_xpath("//div[@class='content text-center bold medium-text relative ellipsis']//span[@class='ellipsis']")
-	except:
-		try:
-			# checks for error message
-			errorMessage = driver.find_element_by_xpath("//div[@class='main-holder grid']/div[2]/span")
-		except:
-			print("No error message found!")
-
+		# checks for error message
+		errorMessage = driver.find_element_by_xpath("//div[@class='main-holder grid']/div[2]/span")
 		g = 0
 		print("Empty page found!")
 		try:
@@ -55,6 +48,8 @@ while startingID != -666:
 				print("FUck you it crashed ahahaah")
 		except:
 			print("HAHAHAHAHAHH")
+	except:
+		print("No error message found.")
 
 	try:
 		# prints username and id
