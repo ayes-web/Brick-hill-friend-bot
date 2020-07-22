@@ -12,42 +12,43 @@ waitTime1 = [10,15]
 waitTime2 = 30
 
 # the id it starts counting up from
-startingID = 354032
+startingID = 354036
+
 
 # You have to login or else it doesn't work
 driver.get("https://www.brick-hill.com/login")
+
+# Waits for the user to login to account
 t = input("Please press enter after you have logged in to the site! ")
 print(" ")
 
-#loops infinite
+#loops go brrr
 while startingID != -666:
 	driver.get("https://www.brick-hill.com/user/" + str(startingID))
 
 	try:
-		# checks for error message
+		# looks for error message
 		errorMessage = driver.find_element_by_xpath("//div[@class='main-holder grid']/div[2]/span")
 		g = 0
-		print("Empty page found!")
+		print("404 page found!")
+		# gets error when it finds new account so this counters it
 		try:
-			# i have no idea why does trys are needed but it closes otherwise please help i am going insane
-			try:
-				while errorMessage.text == "Error 404: Page Not Found" or g == 0:
-					print("Waiting " + str(waitTime2) + " seconds!")
-					time.sleep(waitTime2)
+			while errorMessage.text == "Error 404: Page Not Found" or g == 0:
+				# waits a little bit then tries again
+				print("Waiting " + str(waitTime2) + " seconds!")
+				time.sleep(waitTime2)
 
-					driver.get("https://www.brick-hill.com/user/" + str(startingID))
+				driver.get("https://www.brick-hill.com/user/" + str(startingID))
 
-					try:
-						# checks for error message
-						errorMessage = driver.find_element_by_xpath("//div[@class='main-holder grid']/div[2]/span")
-					except:
-						print("New account found!")
-						#gets out of loop
-						g = 1
-			except:
-				print("FUck you it crashed ahahaah")
+				try:
+					# checks for error message
+					errorMessage = driver.find_element_by_xpath("//div[@class='main-holder grid']/div[2]/span")
+				except:
+					#gets out of loop
+					g = 1	
 		except:
-			print("HAHAHAHAHAHH")
+			print(" ")
+			print("New account found!")
 	except:
 		print("No error message found.")
 
@@ -58,7 +59,7 @@ while startingID != -666:
 		print("Username: " + name.text + " ID: " + str(startingID))
 	except:
 		# username fail message
-		print("I failed to send you the username and id :(")
+		print("I can't send the username and id for some reason!")
 
 	try:
 		# Finds the friend request button
