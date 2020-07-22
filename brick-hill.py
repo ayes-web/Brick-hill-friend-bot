@@ -21,7 +21,7 @@ while firstAccount <= lastAccount:
 	try:
 		# Finds the username
 		name = driver.find_element_by_xpath("//div[@class='content text-center bold medium-text relative ellipsis']//span[@class='ellipsis']")
-		print("Username: " + name.text + "ID: " + str(firstAccount))
+		print("Username: " + name.text + " ID: " + str(firstAccount))
 	except: 
 		print("I can't find the username!")
 		print("ID: " + str(firstAccount))
