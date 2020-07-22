@@ -3,39 +3,53 @@ import json, requests, time, random
 
 # Browser used by the bot
 driver = webdriver.Firefox()
-waitTime = [5,6,7,8,9,10]
+waitTime = [10,11,12,13,14,15]
+firstAccount = 353972
 
 # You have to login or else it doesn't work
 driver.get("https://www.brick-hill.com/login")
-t = input("Press enter after you have logged in to the site! ")
+t = input("Please press enter after you have logged in to the site! ")
 print(" ")
 
-# I don't really know where to get the account count 
-# so i just went to the newest account and put that number :D
-lastAccount = 353913
-firstAccount = -1
-
-while firstAccount <= lastAccount:
-	driver.get("https://www.brick-hill.com/user/" + str(lastAccount))
+while firstAccount != -666:
+	driver.get("https://www.brick-hill.com/user/" + str(firstAccount))
 
 	try:
 		# Finds the username
 		name = driver.find_element_by_xpath("//div[@class='content text-center bold medium-text relative ellipsis']//span[@class='ellipsis']")
-		print("Username: " + name.text + " ID: " + str(lastAccount))
-	except: 
-		print("I can't find the username!")
-		print("ID: " + str(lastAccount))
+	except:
+		try:
+			# checks for error message
+			errorMessage = driver.find_element_by_xpath("//div[@class='main-holder grid']/div[2]/span")
+		except:
+			print("No error message found!")
 
+		g = 0
+		print("Empty page found!")
+		while errorMessage.text == "Error 404: Page Not Found" or g == 0:
+			print("Waiting 30 seconds!")
+			time.sleep(30)
+
+			driver.get("https://www.brick-hill.com/user/" + str(firstAccount))
+
+			try:
+				# checks for error message
+				errorMessage = driver.find_element_by_xpath("//div[@class='main-holder grid']/div[2]/span")
+			except:
+				print("New account found!")
+				g = 1
+	print("Username: " + name.text + " ID: " + str(firstAccount))
 
 	try:
 		# Finds the friend request button
 		button = driver.find_element_by_xpath("//a[@class='button small inline blue']")
 		button.click()
 	except:
-		print("I can't find the button, going to the next one!")
+		print("I can't find the button or i have already sent friend request to them.")
+		print("Going to the next one!")
 
-	lastAccount -= 1
+	firstAccount += 1
 	chosenWait = random.choice(waitTime)
-	print("Waited " + str(chosenWait) + " Seconds")
+	print("Waiting " + str(chosenWait) + " Seconds")
 	time.sleep(chosenWait)
 	print(" ")
