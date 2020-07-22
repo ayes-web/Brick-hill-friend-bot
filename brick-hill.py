@@ -9,7 +9,7 @@ driver = webdriver.Firefox()
 waitTime1 = [10,15]
 
 # how long it waits on 404 pages
-waitTime2 = 30
+waitTime2 = 60
 
 # the id it starts counting up from
 startingID = 354036
@@ -101,4 +101,3 @@ while True:
 	print("Waiting " + str(chosenWait) + " Seconds")
 	#waits the given time
 	time.sleep(chosenWait)
-	print(" ")
