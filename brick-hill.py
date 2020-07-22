@@ -13,18 +13,43 @@ waitTime2 = 30
 
 # the id it starts counting up from
 startingID = 354036
-
+currentID = ""
 
 # You have to login or else it doesn't work
 driver.get("https://www.brick-hill.com/login")
 
+def is_number(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
+
 # Waits for the user to login to account
-t = input("Please press enter after you have logged in to the site! ")
+t = input("Please press enter after you have logged in to the site!")
+print(" ")
+print("Enter the id to start couting up from")
+print("Nothing for default")
+
+try:
+	currentID = int(input("ID: "))
+except:
+	if currentID != "":
+		while is_number(currentID) == False:
+			try:
+				currentID = int(input("ID: "))
+			except:
+				print("Not a number, try again")
+	else:
+		currentID = startingID
+		print("You chose " + str(currentID))
+
+
 print(" ")
 
 #loops go brrr
-while startingID != -666:
-	driver.get("https://www.brick-hill.com/user/" + str(startingID))
+while True:
+	driver.get("https://www.brick-hill.com/user/" + str(currentID))
 
 	try:
 		# looks for error message
@@ -38,7 +63,7 @@ while startingID != -666:
 				print("Waiting " + str(waitTime2) + " seconds!")
 				time.sleep(waitTime2)
 
-				driver.get("https://www.brick-hill.com/user/" + str(startingID))
+				driver.get("https://www.brick-hill.com/user/" + str(currentID))
 
 				try:
 					# checks for error message
@@ -50,13 +75,13 @@ while startingID != -666:
 			print(" ")
 			print("New account found!")
 	except:
-		print("No error message found.")
+		print("")
 
 	try:
 		# prints username and id
-		driver.get("https://www.brick-hill.com/user/" + str(startingID))
+		driver.get("https://www.brick-hill.com/user/" + str(currentID))
 		name = driver.find_element_by_xpath("//div[@class='content text-center bold medium-text relative ellipsis']//span[@class='ellipsis']")
-		print("Username: " + name.text + " ID: " + str(startingID))
+		print("Username: " + name.text + " ID: " + str(currentID))
 	except:
 		# username fail message
 		print("I can't send the username and id for some reason!")
@@ -67,10 +92,9 @@ while startingID != -666:
 		button.click()
 	except:
 		# if it doesnt find the button it sends this and doesnt click
-		print("I already sent friend request to them.")
-		print("Going to the next one!")
+		print("I already sent friend request to them. (Or you aren't logged in)")
 
-	startingID += 1
+	currentID += 1
 
 	#gives random wait time
 	chosenWait = uniform(waitTime1[0], waitTime1[1])
