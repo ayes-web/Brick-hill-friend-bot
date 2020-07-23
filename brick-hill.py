@@ -115,10 +115,13 @@ while True:
 			except:
 				print("")
 			
-			#gets the username using brick-hill api
-			apiLink = "https://api.brick-hill.com/v1/user/profile?id=" + str(currentID)
-			userInfo = requests.get(apiLink)
-			userName = json.loads(userInfo.text)
+			try:
+				#gets the username using brick-hill api
+				apiLink = "https://api.brick-hill.com/v1/user/profile?id=" + str(currentID)
+				userInfo = requests.get(apiLink)
+				userName = json.loads(userInfo.text)
+			except:
+				print("Failed to get username")
 
 			try:
 				# prints username and id
