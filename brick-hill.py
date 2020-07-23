@@ -1,9 +1,6 @@
 from selenium import webdriver
-import json, requests, time
+import json, requests, time, getpass
 from random import *
-
-# Browser used by the bot
-driver = webdriver.Firefox()
 
 # how long it waits going to next user
 waitTime1 = [10,15]
@@ -12,11 +9,12 @@ waitTime1 = [10,15]
 waitTime2 = 60
 
 # the id it starts counting up from
-startingID = 354036
+startingID =  354225
 currentID = ""
 
-# You have to login or else it doesn't work
-driver.get("https://www.brick-hill.com/login")
+username = input("Username: ")
+password = getpass.getpass("Enter your password: ")
+print(" ")
 
 def is_number(s):
     try:
@@ -25,10 +23,7 @@ def is_number(s):
     except ValueError:
         return False
 
-# Waits for the user to login to account
-t = input("Please press enter after you have logged in to the site!")
-print(" ")
-print("Enter the id to start couting up from")
+print("Enter the id to start from")
 print("Nothing for default")
 
 try:
@@ -44,6 +39,20 @@ except:
 		currentID = startingID
 		print("You chose " + str(currentID))
 
+
+# Opens browser and login page
+driver = webdriver.Firefox()
+driver.get("https://www.brick-hill.com/login")
+
+# password, username and submit fields for the bot to use them
+passwordField = driver.find_element_by_id("password")
+usernameField = driver.find_element_by_id("username")
+submitButton = driver.find_element_by_xpath("//div[@class='content']/form/button[@class='green']")
+
+#send the inputs and clicks button
+passwordField.send_keys(password)
+usernameField.send_keys(username)
+submitButton.click()
 
 print(" ")
 
