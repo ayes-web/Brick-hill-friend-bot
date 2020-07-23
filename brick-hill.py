@@ -73,15 +73,10 @@ print(" ")
 
 #loops go brrr
 while True:
-	#gets the username using brick-hill api
-	apiLink = "https://api.brick-hill.com/v1/user/profile?id=" + str(currentID)
-	userInfo = requests.get(apiLink)
-	userName = json.loads(userInfo.text)
-
 	with open("accounts/" + username + ".txt") as f:
-		if userName["username"] + "\n" in f.read():
+		if str(currentID) + "\n" in f.read():
 			#if it finds the username in the list it skips
-			print("Skipping " + userName["username"])
+			print("Skipping ID: " + str(currentID))
 		else:
 			#chooses wait time between pages
 			chosenWait = uniform(waitTime1[0], waitTime1[1])
@@ -91,7 +86,7 @@ while True:
 
 			#adds the username to the txt file
 			f = open("accounts/" + username + ".txt", "a")
-			f.write(userName["username"] + "\n")
+			f.write(str(currentID) + "\n")
 			f.close()
 
 			try:
@@ -119,6 +114,11 @@ while True:
 					print("New account found!")
 			except:
 				print("")
+			
+			#gets the username using brick-hill api
+			apiLink = "https://api.brick-hill.com/v1/user/profile?id=" + str(currentID)
+			userInfo = requests.get(apiLink)
+			userName = json.loads(userInfo.text)
 
 			try:
 				# prints username and id
