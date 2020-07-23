@@ -12,7 +12,7 @@ waitTime2 = 60
 startingID =  354225
 currentID = ""
 
-username = input("Username: ")
+username = input("Enter your username: ")
 password = getpass.getpass("Enter your password: ")
 print(" ")
 
@@ -107,6 +107,6 @@ while True:
 
 	#gives random wait time
 	chosenWait = uniform(waitTime1[0], waitTime1[1])
-	print("Waiting " + str(chosenWait) + " Seconds")
+	print("Request sent, waiting " + str(chosenWait) + " Seconds")
 	#waits the given time
 	time.sleep(chosenWait)
