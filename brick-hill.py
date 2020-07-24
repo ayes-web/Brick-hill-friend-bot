@@ -140,7 +140,7 @@ while True:
 				chosenWait = uniform(waitTime3[0], waitTime3[1])
 
 				# if it doesnt find the button it sends this and doesnt click
-				print("I already sent friend request to them. (Or you aren't logged in)")
+				print("I already sent friend request to them. (Or im not logged in)")
 				print("Waiting " + str(chosenWait) + " Seconds")
 			else:
 				#chooses wait time between pages
