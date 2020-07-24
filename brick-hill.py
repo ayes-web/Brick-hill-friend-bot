@@ -96,6 +96,7 @@ while True:
 				# looks for error message
 				errorMessage = driver.find_element_by_xpath("//div[@class='main-holder grid']/div[2]/span")
 				g = 0
+				print(" ")
 				print("404 page found!")
 				# gets error when it finds new account so this counters it
 				try:
