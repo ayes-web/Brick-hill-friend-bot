@@ -8,15 +8,25 @@ waitTime1 = [10,15]
 # how long it waits on 404 pages
 waitTime2 = 60
 
+# when it doesnt find button goes faster
+waitTime3 = [5, 10]
+
 # the id it starts counting up from
 startingID =  354225
 currentID = ""
+
+#checks if input is number
+def is_number(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
 
 #gets the username and password so it can login to account
 username = input("Enter your username: ")
 password = getpass.getpass("Enter your password: ")
 print(" ")
-
 
 # stores all of the people you have friended so its easier to skip later
 # has different file for different accounts
@@ -26,14 +36,6 @@ try:
 except IOError:
     print("No accounts.txt found, creating one!")
     f = open("accounts/" + username + ".txt", "x")
-
-#chels if input is number
-def is_number(s):
-    try:
-        int(s)
-        return True
-    except ValueError:
-        return False
 
 print("Enter the id to start from")
 print("Nothing for default")
@@ -73,20 +75,21 @@ print(" ")
 
 #loops go brrr
 while True:
+	# some user pages are broken, this is the easiest way to solve it
+	if currentID == 0:
+		currentID += 1
 	with open("accounts/" + username + ".txt") as f:
-		if str(currentID) + "\n" in f.read():
+		if "user:" + str(currentID) + "\n" in f.read():
 			#if it finds the username in the list it skips
 			print("Skipping ID: " + str(currentID))
 		else:
-			#chooses wait time between pages
-			chosenWait = uniform(waitTime1[0], waitTime1[1])
 
 			#opens user page
 			driver.get("https://www.brick-hill.com/user/" + str(currentID))
 
 			#adds the username to the txt file
 			f = open("accounts/" + username + ".txt", "a")
-			f.write(str(currentID) + "\n")
+			f.write("user:" + str(currentID) + "\n")
 			f.close()
 
 			try:
@@ -114,31 +117,34 @@ while True:
 					print("New account found!")
 			except:
 				print("")
-			
+
 			try:
 				#gets the username using brick-hill api
 				apiLink = "https://api.brick-hill.com/v1/user/profile?id=" + str(currentID)
 				userInfo = requests.get(apiLink)
 				userName = json.loads(userInfo.text)
-			except:
-				print("Failed to get username")
 
-			try:
 				# prints username and id
 				print("Username: " + userName["username"] + " ID: " + str(currentID))
 			except:
 				# username fail message
-				print("I can't send the username and id for some reason!")
+				print("I can't send the userinfo for some reason!")
 
 			try:
 				# Finds the friend request button
 				button = driver.find_element_by_xpath("//a[@class='button small inline blue']")
 				button.click()
 			except:
+				#chooses wait time between pages
+				chosenWait = uniform(waitTime3[0], waitTime3[1])
+
 				# if it doesnt find the button it sends this and doesnt click
 				print("I already sent friend request to them. (Or you aren't logged in)")
 				print("Waiting " + str(chosenWait) + " Seconds")
 			else:
+				#chooses wait time between pages
+				chosenWait = uniform(waitTime1[0], waitTime1[1])
+
 				print("Request sent, waiting " + str(chosenWait) + " Seconds")
 			# sleeps only if it didnt skip a page
 			time.sleep(chosenWait)
