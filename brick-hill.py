@@ -1,6 +1,6 @@
-import json, requests, time, getpass, os
-from random import *
+import json, requests, time, getpass, os, random
 from selenium import webdriver
+from discord_webhook import DiscordWebhook
 
 # how long it waits going to next user
 waitTime1 = [10,15]
@@ -14,6 +14,16 @@ waitTime3 = [5, 10]
 # the id it starts counting up from
 startingID =  354225
 currentID = ""
+
+#toggle if you want webhooks
+doWebhooks = False
+webhookURL = ""
+
+def sendWebhook(bigChungus):
+	if doWebhooks == True:
+		webhook = DiscordWebhook(url=webhookURL, content=bigChungus)
+		response = webhook.execute()
+
 
 #checks if input is number
 def is_number(s):
@@ -127,6 +137,7 @@ while True:
 
 				# prints username and id
 				print("Username: " + userName["username"] + " ID: " + str(currentID))
+				sendWebhook("Username: " + userName["username"] + " ID: " + str(currentID))
 			except:
 				# username fail message
 				print("I can't send the userinfo for some reason!")
@@ -142,11 +153,13 @@ while True:
 				# if it doesnt find the button it sends this and doesnt click
 				print("I already sent friend request to them. (Or im not logged in)")
 				print("Waiting " + str(chosenWait) + " Seconds")
+				sendWebhook("Waiting " + str(chosenWait) + " Seconds")
 			else:
 				#chooses wait time between pages
 				chosenWait = uniform(waitTime1[0], waitTime1[1])
 
 				print("Request sent, waiting " + str(chosenWait) + " Seconds")
+				sendWebhook("Request sent, waiting " + str(chosenWait) + " Seconds")
 			# sleeps only if it didnt skip a page
 			time.sleep(chosenWait)
 
