@@ -16,12 +16,11 @@ waitTime3 = [5, 10]
 startingID =  354225
 currentID = ""
 
-#toggle if you want webhooks
-doWebhooks = False
+#Fill this in if you want discord webhooks
 webhookURL = ""
 
 def sendWebhook(bigChungus):
-	if doWebhooks == True:
+	if webhookURL != "":
 		webhook = DiscordWebhook(url=webhookURL, content=bigChungus)
 		response = webhook.execute()
 
