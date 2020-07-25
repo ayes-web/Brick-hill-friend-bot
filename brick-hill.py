@@ -138,7 +138,7 @@ while True:
 
 				# prints username and id
 				print("Username: " + userName["username"] + " ID: " + str(currentID))
-				sendWebhook("Username: " + userName["username"] + " ID: " + str(currentID))
+				sendWebhook("Request sent, Username: " + userName["username"] + " ID: " + str(currentID))
 			except:
 				# username fail message
 				print("I can't send the userinfo for some reason!")
@@ -154,13 +154,11 @@ while True:
 				# if it doesnt find the button it sends this and doesnt click
 				print("I already sent friend request to them. (Or im not logged in)")
 				print("Waiting " + str(chosenWait) + " Seconds")
-				sendWebhook("Waiting " + str(chosenWait) + " Seconds")
 			else:
 				#chooses wait time between pages
 				chosenWait = uniform(waitTime1[0], waitTime1[1])
 
 				print("Request sent, waiting " + str(chosenWait) + " Seconds")
-				sendWebhook("Request sent, waiting " + str(chosenWait) + " Seconds")
 			# sleeps only if it didnt skip a page
 			time.sleep(chosenWait)
 
