@@ -1,4 +1,5 @@
-import json, requests, time, getpass, os, random
+import json, requests, time, getpass, os
+from random import *
 from selenium import webdriver
 from discord_webhook import DiscordWebhook
 

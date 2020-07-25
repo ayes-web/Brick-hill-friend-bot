@@ -1,0 +1,1 @@
+(/usr/lib/firefox/firefox:38842): Gtk-WARNING **: 15:01:46.222: Theme parsing error: gtk.css:71:36: The style property GtkCheckMenuItem:indicator-size is deprecated and shouldn't be used anymore. It will be removed in a future version
