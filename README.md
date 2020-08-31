@@ -1,3 +1,4 @@
+# I suggest you use the new one made by me!
 Remaking this in rust language https://github.com/ayes-web/Brickhill-friend-bot-rust
 # Brick-hill-friend-bot
 Goes thru all of the user ids and sends friend request to them.
